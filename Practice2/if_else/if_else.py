@@ -18,7 +18,7 @@ else:
 username = "Emil"
 
 if len(username) > 0:
-  print(f"Welcome, {username}!")
+  print(f"Welcome, {username}!") #f string
 else:
   print("Error: Username cannot be empty")
 
