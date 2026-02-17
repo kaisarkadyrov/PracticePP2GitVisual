@@ -1,13 +1,19 @@
-#1
 class Person:
-  def __init__(self, fname, lname):
-    self.firstname = fname
-    self.lastname = lname
+    def __init__(self, fname, lname):
+        self.firstname = fname
+        self.lastname = lname
 
-  def printname(self):
-    print(self.firstname, self.lastname)
+    def printname(self):
+        print(self.firstname, self.lastname)
 
-#Use the Person class to create an object, and then execute the printname method:
+class Student(Person):
+    def __init__(self, fname, lname, year):
+        super().__init__(fname, lname)
+        self.year = year
 
-x = Person("John", "Doe")
+    def welcome(self):
+        print(f"Welcome {self.firstname} {self.lastname} to class of {self.year}")
+
+x = Student("John", "Doe", 2025)
 x.printname()
+x.welcome()
