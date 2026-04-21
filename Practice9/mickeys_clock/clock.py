@@ -2,13 +2,18 @@ import os
 import pygame
 
 def blitRotate(surf, image, pos, originPos, angle):
-    image_rect = image.get_rect(topleft=(pos[0] - originPos[0], pos[1] - originPos[1]))
-    offset_center_to_pivot = pygame.math.Vector2(pos) - image_rect.center
-    rotated_offset = offset_center_to_pivot.rotate(-angle)
-    rotated_center = (pos[0] - rotated_offset.x, pos[1] - rotated_offset.y)
-    rotated_image = pygame.transform.rotozoom(image, angle, 1.0)
-    rotated_rect = rotated_image.get_rect(center=rotated_center)
-    surf.blit(rotated_image, rotated_rect)
+    # создаём большой прозрачный холст
+    size = max(image.get_size()) * 2
+    canvas = pygame.Surface((size, size), pygame.SRCALPHA)
+    
+    # рисуем стрелку в центр холста со смещением на originPos
+    canvas.blit(image, (size//2 - originPos[0], size//2 - originPos[1]))
+    
+    # поворачиваем весь холст вокруг его центра
+    rotated = pygame.transform.rotozoom(canvas, angle, 1.0)
+    
+    # рисуем на экране
+    surf.blit(rotated, rotated.get_rect(center=pos))
 
 class ClockRenderer:
     def __init__(self, screen, base_dir):
