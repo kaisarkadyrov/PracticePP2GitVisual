@@ -151,18 +151,24 @@ def search_by_email():
 def sort_and_list():
     print("\nSort by:  1) Name   2) Birthday   3) Date added")
     choice = input("Choice [1]: ").strip() or "1"
+
     order_map = {
-        "1": "c.name",
-        "2": "c.birthday NULLS LAST",
-        "3": "c.created_at",
+        "1": "c.name ASC",
+        "2": "c.birthday ASC NULLS LAST",
+        "3": "c.created_at ASC",
     }
-    order = order_map.get(choice, "c.name")
+    order = order_map.get(choice, "c.name ASC")
 
     with _conn() as conn:
         with conn.cursor(cursor_factory=psycopg2.extras.RealDictCursor) as cur:
-            cur.execute(f"SELECT id FROM contacts c ORDER BY {order}")
-            ids = [r["id"] for r in cur.fetchall()]
-        results = _fetch_contacts_with_phones(conn, ids)
+            cur.execute(f"""
+                SELECT c.*, p.phone
+                FROM contacts c
+                LEFT JOIN phones p ON p.contact_id = c.id
+                ORDER BY {order}
+            """)
+            results = cur.fetchall()
+
     _print_contacts(results)
 
 
@@ -183,9 +189,9 @@ def paginated_browse():
         with _conn() as conn:
             with conn.cursor(cursor_factory=psycopg2.extras.RealDictCursor) as cur:
                 cur.execute(
-                    "SELECT * FROM get_contacts_paginated(%s, %s)",
-                    (page_size, offset),
-                )
+                "SELECT * FROM contacts ORDER BY id LIMIT %s OFFSET %s",
+                (page_size, offset),
+            )
                 rows = cur.fetchall()
 
         print(f"\n── Page {page + 1} / {total_pages} ──")
