@@ -13,8 +13,8 @@ canvas.fill((255, 255, 255))
 clock = pygame.time.Clock()
 font = pygame.font.SysFont("arial", 13)
 
-TOOLS   = ["pencil","line","rect","circle","square","rtriangle","etriangle","rhombus","fill","text","eraser"]
-LABELS  = ["Pencil","Line","Rectangle","Circle","Square","Right Triangle","Equil. Triangle","Rhombus","Fill","Text","Eraser"]
+TOOLS   = ["pencil","line","rect","circle","square","rtriangle","rhombus","fill","text","eraser"]
+LABELS  = ["Pencil","Line","Rectangle","Circle","Square","Right Triangle","Rhombus","Fill","Text","Eraser"]
 KEYS    = [pygame.K_p, pygame.K_l, pygame.K_r, pygame.K_c, pygame.K_q,
            pygame.K_t, pygame.K_e, pygame.K_h, pygame.K_f, pygame.K_x, pygame.K_z]
 COLORS  = [(0,0,0),(255,255,255),(220,50,50),(50,200,80),(60,110,220),

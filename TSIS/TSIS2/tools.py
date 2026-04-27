@@ -30,7 +30,7 @@ def draw_shape(surface, tool, start, end, color, size):
         if r.width and r.height: pygame.draw.rect(surface, color, r, size)
     elif tool == "circle":
         cx, cy = (x1+x2)//2, (y1+y2)//2
-        r = int(math.hypot(x2-x1, y2-y1) / 2)
+        r = int(math.hypot(x2-x1, y2-y1) / 2) # diagonal
         if r: pygame.draw.circle(surface, color, (cx, cy), r, size)
     elif tool == "square":
         s = min(abs(x2-x1), abs(y2-y1))
@@ -39,14 +39,6 @@ def draw_shape(surface, tool, start, end, color, size):
         if s: pygame.draw.rect(surface, color, (sx, sy, s, s), size)
     elif tool == "rtriangle":
         pygame.draw.polygon(surface, color, [start, (x1,y2), end], size)
-    elif tool == "etriangle":
-        base = math.hypot(x2-x1, y2-y1)
-        if base < 1: return
-        mx, my = (x1+x2)/2, (y1+y2)/2
-        nx, ny = -(y2-y1)/base, (x2-x1)/base
-        h = base * math.sqrt(3) / 2
-        apex = (int(mx + nx*h), int(my + ny*h))
-        pygame.draw.polygon(surface, color, [start, end, apex], size)
     elif tool == "rhombus":
         cx, cy = (x1+x2)//2, (y1+y2)//2
         hw, hh = abs(x2-x1)//2, abs(y2-y1)//2
