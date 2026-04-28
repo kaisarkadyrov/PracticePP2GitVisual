@@ -1,8 +1,38 @@
 [
     {
+        "name": "TEST",
+        "score": 1731,
+        "distance": 705,
+        "coins": 30
+    },
+    {
+        "name": "dsdad",
+        "score": 997,
+        "distance": 394,
+        "coins": 17
+    },
+    {
+        "name": "dasds",
+        "score": 573,
+        "distance": 211,
+        "coins": 8
+    },
+    {
+        "name": "dasd",
+        "score": 458,
+        "distance": 131,
+        "coins": 8
+    },
+    {
         "name": "tesdt",
         "score": 149,
         "distance": 68,
         "coins": 3
+    },
+    {
+        "name": "dsa",
+        "score": 116,
+        "distance": 37,
+        "coins": 2
     }
 ]

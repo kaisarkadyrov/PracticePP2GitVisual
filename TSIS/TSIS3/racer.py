@@ -17,11 +17,6 @@ def load_image(name, w, h):
             pass
     surf = pygame.Surface((w, h), pygame.SRCALPHA)
     surf.fill((80, 80, 80, 220))
-    try:
-        lbl = pygame.font.Font(None, 14).render(name[:8], True, (255, 220, 0))
-        surf.blit(lbl, (2, h // 2 - 7))
-    except Exception:
-        pass
     return surf
 
 
@@ -40,8 +35,7 @@ class Player(pygame.sprite.Sprite):
         self._flash_timer  = 0
         self._visible      = True
 
-    @property
-    def speed(self):
+    def get_speed(self):
         if self.nitro_active:
             return self.base_speed * 2.0
         if pygame.time.get_ticks() < self.slow_timer:
@@ -61,12 +55,18 @@ class Player(pygame.sprite.Sprite):
 
     def update(self):
         keys = pygame.key.get_pressed()
-        s    = self.speed
-        if keys[pygame.K_LEFT]  and self.rect.left  > 152: self.rect.x -= s
-        if keys[pygame.K_RIGHT] and self.rect.right < 448: self.rect.x += s
+        s = self.get_speed() 
+
+        if keys[pygame.K_LEFT]  and self.rect.left  > 152:
+            self.rect.x -= s
+        if keys[pygame.K_RIGHT] and self.rect.right < 448:
+            self.rect.x += s
+
         now = pygame.time.get_ticks()
+
         if (self.nitro_active or self.shield_active) and now > self.powerup_timer:
             self.nitro_active = self.shield_active = False
+
         if self._flash_timer > 0:
             self._flash_timer -= 1
             self._visible = (self._flash_timer % 6) < 3
